@@ -1,0 +1,266 @@
+.header {
+  background-color: #073042;
+  width: 100%;
+  padding: 18px 0;
+}
+
+.header_color_black {
+  background-color: #202020;
+}
+
+.header__main-line {
+  display: grid;
+  grid: "header-logo film-menu register-menu" 38px / 38px 1fr 1fr;
+  column-gap: 44px;
+  align-items: center;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.header__logo-link {
+  grid-area: header-logo;
+  justify-self: start;
+  align-self: start;
+}
+
+.header__logo {
+  border: none;
+  margin: 0;
+}
+
+.header__film-menu {
+  grid-area: film-menu;
+  justify-self: start;
+  display: flex;
+  gap: 16px;
+}
+
+.header__profile-menu {
+  grid-area: register-menu;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+}
+
+.header__link {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  text-decoration: none;
+  color: #ffffff;
+  transition: opacity 0.2s;
+  font-family: 'Inter';
+}
+
+.header__link:hover {
+  opacity: .8;
+}
+
+.film-link {
+  font-size: 13px;
+  line-height: 1.38;
+}
+
+.header__link_type_login {
+  background-color: #3DDC84;
+  color: black;
+  border-radius: 3px;
+  padding: 8px 20px;
+  z-index: 1;
+}
+
+.header__link_type_profile {
+  font-size: 14px;
+  line-height: 1.14;
+  background-color: #313131;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 8px 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .header__main-line {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+
+  .header__main-line {
+    padding: 0 14px;
+  }
+
+  .header__link_type_login {
+    font-size: 10px;
+    line-height: 1.6;
+    padding: 5px 12px;
+  }
+
+  .header__link_type_register {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .header__profile-menu {
+    gap: 14px;
+  }
+}
+
+/*----------Checkbox side-panel------------*/
+
+.side-panel {
+  position: relative;
+  grid-area: register-menu;
+  justify-self: end;
+  cursor: pointer;
+  display: none;
+  z-index: 10;
+}
+
+.side-panel__checkbox-invisible {
+  display: block;
+  height: 44px;
+  width: 44px;
+  overflow: hidden;
+  clip-path: circle(0%);
+  position: absolute;
+}
+
+.side-panel__checkbox-visible {
+  width: 28px;
+  height: 23px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.side-panel__checkbox-visible-line {
+  display: block;
+  background-color: #FFFFFF;
+  height: 3px;
+}
+
+.side-panel__checkbox-visible:hover {
+  opacity: .8;
+}
+
+.side-panel_invisible {
+  visibility: hidden;
+}
+
+.side-panel__window {
+  display: none;
+  padding: 159px 0 90px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  right: 0;
+  width: 520px;
+  background-color: #202020;
+  color: #FFFFFF;
+  transition: all 300ms;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.side-panel__window:hover {
+  cursor: auto;
+}
+
+.side-panel__link-block {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.side-link {
+  color: #FFFFFF;
+  font-size: 18px;
+  line-height: 1.22;
+  border-bottom: 2px solid;
+  border-color: #202020;
+}
+
+.side-link:hover {
+  border-bottom: 2px white solid;
+}
+
+.side-link__type_profile {
+  background-color: #313131;
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 14px;
+  line-height: 1.14;
+}
+
+.side-panel__checkbox-visible:active {
+  visibility: hidden;
+}
+
+.side-panel__checkbox-invisible:checked+.side-panel__window {
+  display: flex;
+}
+
+.side-panel__close-button {
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  padding: 0;
+  background-image: url("../../images/sideclosebutton.svg");
+  background-color: initial;
+  border: none;
+
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 23px;
+  right: 23px;
+}
+
+.side-panel__close-button:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+@media screen and (max-width: 820px) {
+  .side-panel {
+    display: block;
+  }
+
+  .header__link_type_profile {
+    display: none;
+  }
+
+  .film-link {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 520px) {
+
+  .side-panel {
+    height: 100%;
+  }
+
+  .side-panel__window {
+    padding: 144px 10px 46px;
+    height: calc(100% - 190px);
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .side-panel__checkbox-invisible {
+    height: 20px;
+    width: 22px;
+  }
+}

@@ -1,0 +1,36 @@
+.movies {
+  background-color: #202020;
+  flex-grow: 1;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* -----------show-more-------------- */
+.show-more {
+  padding: 50px 0 80px;
+}
+
+.show-more__button {
+  display: block;
+  width: 320px;
+  height: 36px;
+  background-color: #2F2F2F;
+  border: none;
+  border-radius: 6px;
+  color: #FFFFFF;
+  margin: 0 auto;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.21;
+  font-weight: 500;
+}
+
+.show-more__button:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 560px) {
+  .show-more__button {
+    width: 240px;
+  }
+}

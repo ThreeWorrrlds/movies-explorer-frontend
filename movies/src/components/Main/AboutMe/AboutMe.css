@@ -1,0 +1,160 @@
+/* -------------AboutMe----------------- */
+.about-me {
+  background-color: #202020;
+  color: #FFFFFF;
+  padding: 110px 70px 100px;
+}
+
+.about-me__title {
+  max-height: 50px;
+  max-width: 1140px;
+  padding-bottom: 23px;
+  margin: 0 auto;
+  border-bottom: 1px solid #DADADA;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.about-me__description {
+  display: grid;
+  grid:
+    "subtitle photo" 76px "subtitle-two photo" 46px "paragraph photo" 187px "link photo" 18px / 1fr 1fr;
+  padding-top: 66px;
+  max-width: 1140px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.about-me__subtitle {
+  grid-area: subtitle;
+  font-size: 50px;
+  line-height: 1.16;
+  font-weight: 400;
+  margin: 0;
+}
+
+.about-me__subtitle-two {
+  grid-area: subtitle-two;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.11;
+  font-weight: 500;
+}
+
+.about-me__text {
+  grid-area: paragraph;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.57;
+  font-weight: 400;
+}
+
+.about-me__link {
+  grid-area: link;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.21;
+  font-weight: 500;
+  color: #FFFFFF;
+  justify-self: start;
+
+}
+
+.about-me__image {
+  grid-area: photo;
+  justify-self: end;
+}
+
+@media screen and (max-width: 890px) {
+  .about-me {
+    padding: 90px 50px;
+  }
+
+  .about-me__description {
+    grid:
+      "subtitle photo" 40px "subtitle-two photo" 54px "paragraph photo" 195px "link photo" 17px / 1fr 1fr;
+  }
+
+  .about-me__subtitle {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .about-me__subtitle-two {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+    margin: 16px 0 20px;
+  }
+
+  .about-me__text {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .about-me__link {
+    font-size: 14px;
+    line-height: 1.21;
+    font-weight: 500;
+  }
+
+  .about-me__image {
+    height: 307px;
+    width: 255px;
+  }
+
+}
+
+
+@media screen and (max-width: 570px) {
+  .about-me__description {
+    grid:
+      "photo" 352px "subtitle" 76px "subtitle-two " 56px "paragraph " 152px "link " 17px / 1fr;
+
+    padding-top: 60px;
+  }
+
+  .about-me__image {
+    width: 292px;
+    height: 352px;
+    justify-self: center;
+  }
+
+  .about-me__subtitle {
+    align-self: end;
+  }
+
+  .about-me__subtitle-two {
+    align-self: center;
+    margin: 0;
+  }
+
+}
+
+@media screen and (max-width: 420px) {
+  .about-me {
+    padding: 70px 14px 70px;
+  }
+
+  .about-me__title {
+    font-size: 18px;
+    line-height: 1.21;
+  }
+
+  .about-me__subtitle {
+    font-size: 30px;
+    line-height: 1.21;
+  }
+
+  .about-me__subtitle-two {
+    font-size: 11px;
+    line-height: 1.46;
+  }
+
+  .about-me__text {
+    font-size: 11px;
+    line-height: 1.46;
+  }
+}
