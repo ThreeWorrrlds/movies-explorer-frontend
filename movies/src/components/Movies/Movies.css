@@ -6,11 +6,11 @@
 }
 
 /* -----------show-more-------------- */
-.show-more {
+.movies__show-more {
   padding: 50px 0 80px;
 }
 
-.show-more__button {
+.movies__show-more-button {
   display: block;
   width: 320px;
   height: 36px;
@@ -25,12 +25,12 @@
   font-weight: 500;
 }
 
-.show-more__button:hover {
+.movies__show-more-button:hover {
   cursor: pointer;
 }
 
 @media screen and (max-width: 560px) {
-  .show-more__button {
+  .movies__show-more-button {
     width: 240px;
   }
 }

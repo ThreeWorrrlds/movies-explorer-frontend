@@ -17,8 +17,8 @@ function Profile() {
           placeholder="E-mail" minLength="3" maxLength="30" required />
         <span className="profile__text-error profile-email-error"></span>
 
-        <button type="submit" className="profile__button-submit button-type-edit">Редактировать</button>
-        <button type="submit" className="profile__button-submit button-type-exit">Выйти из аккаунта</button>
+        <button type="submit" className="profile__button-submit profile__button_type_edit">Редактировать</button>
+        <button type="submit" className="profile__button-submit profile__button_type_exit">Выйти из аккаунта</button>
 
       </form>
     </div>

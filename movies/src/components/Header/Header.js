@@ -15,7 +15,6 @@ function Header() {
 
   return (
     <header className={changeBackgroundHeader}>
-
       <div className="header__main-line">
         <a href='/' className="header__logo-link">
           <img src={logo} alt="Белый смайл на зеленом фоне" className="header__logo" />
@@ -23,9 +22,9 @@ function Header() {
 
         <nav className="header__film-menu">
           {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
-            <Link className="header__link film-link" to='/movies'>Фильмы</Link>}
+            <Link className="header__link header__link_film" to='/movies'>Фильмы</Link>}
           {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
-            <Link className="header__link film-link" to='/saved-movies'>Сохранённые фильмы</Link>}
+            <Link className="header__link header__link_film" to='/saved-movies'>Сохранённые фильмы</Link>}
         </nav>
 
         <label htmlFor="sidepanel" className={changeVsibleSideButton}>
@@ -33,29 +32,28 @@ function Header() {
           <div className="side-panel__window">
             <button type="button" className="side-panel__close-button"></button>
             <nav className="side-panel__link-block">
-              <Link className="header__link side-link" to='/'>Главная</Link>
-              <Link className="header__link side-link" to='/movies'>Фильмы</Link>
-              <Link className="header__link side-link" to='/saved-movies'>Сохранённые фильмы</Link>
+              <Link className="side-panel__link" to='/'>Главная</Link>
+              <Link className="side-panel__link" to='/movies'>Фильмы</Link>
+              <Link className="side-panel__link" to='/saved-movies'>Сохранённые фильмы</Link>
             </nav>
-            <Link className="header__link side-link__type_profile" to='/profile'>Аккаунт</Link>
+            <Link className="side-link__type_profile" to='/profile'>Аккаунт</Link>
           </div>
           <nav className="side-panel__checkbox-visible">
-            <span className="side-panel__checkbox-visible-line"></span>
-            <span className="side-panel__checkbox-visible-line"></span>
-            <span className="side-panel__checkbox-visible-line"></span>
+            <span className="side-panel__checkbox-line"></span>
+            <span className="side-panel__checkbox-line"></span>
+            <span className="side-panel__checkbox-line"></span>
           </nav>
         </label>
 
         <nav className="header__profile-menu">
           {(path === '/') &&
-            <Link className="header__link profile-link header__link_type_register" to='/signup'>Регистрация</Link>}
+            <Link className="header__link header__link_type_register" to='/signup'>Регистрация</Link>}
           {(path === '/') &&
-            <Link className="header__link profile-link header__link_type_login" to='/signin'>Войти</Link>}
+            <Link className="header__link header__link_type_login" to='/signin'>Войти</Link>}
           {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
-            <Link className="header__link profile-link header__link_type_profile" to='/profile'>Аккаунт</Link>}
+            <Link className="header__link header__link_type_profile" to='/profile'>Аккаунт</Link>}
         </nav>
       </div>
-
     </header>
   );
 }

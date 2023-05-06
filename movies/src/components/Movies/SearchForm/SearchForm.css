@@ -65,10 +65,12 @@
   justify-self: end;
   align-self: center;
   margin-right: 257px;
+  transition: opacity 0.2s;
 }
 
 .search-form__button-submit:hover {
   cursor: pointer;
+  opacity: .8;
 }
 
 .search-form__separator {

@@ -66,11 +66,11 @@
   cursor: pointer;
 }
 
-.button-type-edit {
+.profile__button_type_edit {
   margin: 220px 0 16px;
 }
 
-.button-type-exit {
+.profile__button_type_exit {
   color: #EE3465;
   font-weight: 500;
 }
@@ -84,7 +84,7 @@
     margin: 0 0 96px;
   }
 
-  .button-type-edit {
+  .profile__button_type_edit {
     margin: 210px 0 16px;
   }
 }
@@ -103,7 +103,7 @@
 
   }
 
-  .button-type-edit {
+  .profile__button_type_edit {
     margin-top: calc(100vh - 419px);
   }
 

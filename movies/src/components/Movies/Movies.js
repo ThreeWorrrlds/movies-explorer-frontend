@@ -8,8 +8,8 @@ function Movies() {
     <div className="movies">
       < SearchForm />
       < MoviesCardList />
-      <section className="show-more" for="load-more">
-        <button className="show-more__button" type="button">Еще</button>
+      <section className="movies__show-more" for="load-more">
+        <button className="movies__show-more-button" type="button">Еще</button>
       </section>
     </div>
   );
