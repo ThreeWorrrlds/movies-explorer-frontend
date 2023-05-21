@@ -82,10 +82,17 @@
   font-size: 14px;
   line-height: 1.21;
   font-weight: 500;
+  cursor: pointer;
 }
 
-.register__button-submit:hover {
+/* .register__button-submit:hover {
   cursor: pointer;
+} */
+
+.register__button-submit_inactive {
+  background-color: #2F2F2F;
+  color: #8B8B8B;
+  cursor: default;
 }
 
 .register__link-auth {

@@ -42,7 +42,6 @@
   line-height: 1.21;
   font-weight: 500;
   direction: rtl;
-  margin-bottom: 16.7px;
 }
 
 .input-email {
@@ -60,10 +59,12 @@
   line-height: 1.21;
   font-weight: 400;
   color: #FFFFFF;
+  cursor: pointer;
 }
 
-.profile__button-submit:hover {
-  cursor: pointer;
+.profile__button-submit_inactive {
+  color: #8B8B8B;
+  cursor: default;
 }
 
 .profile__button_type_edit {
@@ -73,6 +74,20 @@
 .profile__button_type_exit {
   color: #EE3465;
   font-weight: 500;
+}
+
+.profile__text-error {
+  font-size: 10px;
+  line-height: 1.21;
+  font-weight: 400;
+  color: #EE3465;
+  outline: none;
+  border: none;
+  min-height: 16.7px;
+}
+
+.profile-email-error {
+  min-height: 24.2px;
 }
 
 @media screen and (max-width: 890px) {

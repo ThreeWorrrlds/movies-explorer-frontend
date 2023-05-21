@@ -4,18 +4,33 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  /* grid-template-rows: 151px 151px 151px 151px; */
+  grid-template-rows: repeat(auto-fit, minmax(218px, 1fr));
   overflow: hidden;
   column-gap: 20px;
   row-gap: 32px;
 }
 
+
+@media screen and (max-width: 1279px) {
+  .movies-cards {
+    grid-template-columns: repeat(auto-fit, minmax(339px, 1fr));
+    /*  grid-template-rows: repeat(auto-fit, minmax(257px, 1fr)); */
+    overflow: hidden;
+    column-gap: 20px;
+    row-gap: 32px;
+  }
+}
+
 @media screen and (max-width: 890px) {
   .movies-cards {
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     padding: 70px 30px 30px;
     column-gap: 30px;
     row-gap: 36px;
   }
 }
+
 
 @media screen and (max-width: 560px) {
   .movies-cards {

@@ -184,6 +184,14 @@
   cursor: auto;
 }
 
+.side-panel__window-hidden {
+  display: none !important;
+}
+
+.side-panel__window-shown {
+  display: flex;
+}
+
 .side-panel__link-block {
   padding: 0;
   display: flex;
@@ -234,6 +242,8 @@
 .side-panel__checkbox-invisible:checked+.side-panel__window {
   display: flex;
 }
+
+
 
 .side-panel__close-button {
   height: 30px;

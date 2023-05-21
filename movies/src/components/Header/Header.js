@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from '../../images/logo.svg';
 import { Link, useRouteMatch } from 'react-router-dom';
 
@@ -12,6 +12,10 @@ function Header() {
   const changeVsibleSideButton = (
     `side-panel ${(path === '/') ? 'side-panel_invisible' : ''}`
   );
+
+  function closeSidePanel() {
+    document.getElementById('sidepanel').checked = false;
+  }
 
   return (
     <header className={changeBackgroundHeader}>
@@ -30,7 +34,7 @@ function Header() {
         <label htmlFor="sidepanel" className={changeVsibleSideButton}>
           <input id="sidepanel" type="checkbox" className="side-panel__checkbox-invisible" />
           <div className="side-panel__window">
-            <button type="button" className="side-panel__close-button"></button>
+            <button type="button" className="side-panel__close-button" onClick={closeSidePanel}></button>
             <nav className="side-panel__link-block">
               <Link className="side-panel__link" to='/'>Главная</Link>
               <Link className="side-panel__link" to='/movies'>Фильмы</Link>
@@ -38,7 +42,7 @@ function Header() {
             </nav>
             <Link className="side-link__type_profile" to='/profile'>Аккаунт</Link>
           </div>
-          <nav className="side-panel__checkbox-visible">
+          <nav className="side-panel__checkbox-visible" >
             <span className="side-panel__checkbox-line"></span>
             <span className="side-panel__checkbox-line"></span>
             <span className="side-panel__checkbox-line"></span>

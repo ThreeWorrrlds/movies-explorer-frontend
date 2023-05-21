@@ -1,11 +1,12 @@
 .saved-movies {
+  /*  background-color: #202020; */
   background-color: #202020;
   flex-grow: 1;
   width: 100%;
   margin: 0 auto;
 }
 
-.movies-card__checkbox-closebtn {
+/* .movies-card__checkbox-closebtn {
   display: block;
   background-image: url(../../images/deletefilmbutton.svg);
   background-position: center;
@@ -15,4 +16,4 @@
   border: none;
   margin: 0;
   padding: 0;
-}
+} */
