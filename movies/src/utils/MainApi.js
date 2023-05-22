@@ -1,11 +1,8 @@
 /* export const BASE_URL = 'http://localhost:3000'; */
 export const BASE_URL = 'http://localhost:3005';
-
-/* export const CURRENT_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY1ZWVkNzA0YTE1MTQ2ZWFlMWZlNmQiLCJpYXQiOjE2ODQ0MDE4NzksImV4cCI6MTY4NTAwNjY3OX0.-MHMDYlHKKuj0BdUbz_xEgmPG6nmnnMwUkV0u-ymI68' */
+/* export const BASE_URL = 'https://api.harrymidas.nomoredomains.work'; */
 
 export const CURRENT_TOKEN = JSON.parse(localStorage.getItem('jwt'));
-
-/* export const IMAGE_URL = 'https://api.nomoreparties.co' */
 
 export class MainApi {
   #onResponce(res) {

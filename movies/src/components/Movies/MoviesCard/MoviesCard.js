@@ -69,10 +69,6 @@ function MoviesCard({
     const formatTime = hours + "ч" + minutes + "м";
     return formatTime;
   }
-  console.log(countDuration(103))
-
-  /*  const durationFilm = Math.floor(film.duration / 60)   
-   console.log(durationFilm) */
 
   return (
     <li className={changeVisibleCards}>
@@ -91,8 +87,3 @@ function MoviesCard({
   )
 }
 export default MoviesCard;
-
-
-/* {(path === '/movies') ?
-              <span className="movies-card__checkbox-visible"></span> :
-              <span className="movies-card__checkbox-delete-visible" onClick={handleButtonDel}></span>} */

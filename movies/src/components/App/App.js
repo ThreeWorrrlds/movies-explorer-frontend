@@ -146,10 +146,6 @@ function App() {
     localStorage.setItem('showFoundFilms', JSON.stringify(showFoundFilms));
   }
 
-
-
-
-
   useEffect(() => {
     if (loggedIn) {
       api.getAllFavoriteMovies()
