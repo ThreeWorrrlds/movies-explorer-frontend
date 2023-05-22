@@ -125,8 +125,12 @@ function App() {
 
   /* --------НАПОЛНЯЕТ СТЕЙТЫ MOVIES и FILMS-------- */
   useEffect(() => {
-    setMovies(JSON.parse(localStorage.getItem('dataFilms')));
-    setFilms(JSON.parse(localStorage.getItem('showFoundFilms')));
+    const allMovies = JSON.parse(localStorage.getItem('dataFilms'));
+    setMovies(allMovies);
+    const foundFilms = JSON.parse(localStorage.getItem('showFoundFilms'));
+    if (foundFilms) {
+      setFilms(foundFilms);
+    }
   }, [])
 
   /* --------ОБРАБАТЫВАЕТ ПОИСК НА СТРАНИЦЕ /MOVIES--------------*/
