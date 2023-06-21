@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 
-function Profile({ onEditProfile }) {
+function Profile({
+  onEditProfile,
+  handleLogout
+}) {
 
   const history = useHistory();
 
@@ -67,8 +70,7 @@ function Profile({ onEditProfile }) {
   }
 
   function signOut() {
-    localStorage.removeItem('jwt');
-    history.push('/');
+    handleLogout();
   }
 
   return (

@@ -72,6 +72,20 @@ function App() {
       })
   }
 
+  /*-------------LOGOUT---------------*/
+  function handleLogout() {
+    setLoggedIn(false);
+    setFilms([]);
+    setSavedMovies([]);
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('username');
+    localStorage.removeItem('namefilm');
+    localStorage.removeItem('shortfilm');
+    localStorage.removeItem('showFoundFilms');
+    /* localStorage.removeItem('savedFilms'); */
+    history.push('/');
+  }
+
   /* ----------ПОЛУЧЕНИЕ ДАННЫХ ТЕКУЩЕГО ЮЗЕРА---------*/
   useEffect(() => {
     if (loggedIn) {
@@ -150,6 +164,7 @@ function App() {
     localStorage.setItem('showFoundFilms', JSON.stringify(foundMovies));
   }
 
+  /*------------ Получает сохраненные фильмы -----------*/
   useEffect(() => {
     if (loggedIn) {
       api.getAllFavoriteMovies()
@@ -291,6 +306,7 @@ function App() {
             <ProtectedRoute
               Component={Profile}
               onEditProfile={handleBtnEditProfile}
+              handleLogout={handleLogout}
               loggedIn={loggedIn}
             />
           </Route>
