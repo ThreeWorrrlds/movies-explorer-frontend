@@ -9,7 +9,7 @@ export class MainApi {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject("Ошибка", `${res}`);
+    return Promise.reject(res);
   }
 
   constructor(baseUrl, headers) {
@@ -21,21 +21,25 @@ export class MainApi {
     return fetch(url, options).then(this.#onResponce)
   }
 
-
   /* Добавляет фильм в избранное */
-  async addFavoriteMovie(data) {
+  addSavedMovie(data, token) {
+    console.log(this._headers)
     return this._request(`${this._baseUrl}/movies`, {
       method: 'POST',
-      headers: this._headers,
+      /* headers: this._headers, */
+      headers: {
+        "authorization": `Bearer ${token}`,
+        "content-type": "application/json"
+      },
       body: JSON.stringify({
         country: data.country,
         director: data.director,
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: await `https://api.nomoreparties.co/${data.image.url}`,
+        image: `https://api.nomoreparties.co/${data.image.url}`,
         trailerLink: data.trailerLink,
-        thumbnail: await `https://api.nomoreparties.co/${data.image.url}`,
+        thumbnail: `https://api.nomoreparties.co/${data.image.url}`,
         movieId: data.id,
         nameRU: data.nameRU,
         nameEN: data.nameEN
@@ -44,17 +48,25 @@ export class MainApi {
   }
 
   /*----- Получаем все фильмы сервера (сохранённые)------ */
-  getAllFavoriteMovies() {
+  getAllSavedMovies(token) {
     return this._request(`${this._baseUrl}/movies`, {
-      headers: this._headers,
+      /* headers: this._headers, */
+      headers: {
+        "authorization": `Bearer ${token}`,
+        "content-type": "application/json"
+      }
     })
   }
 
   /* ------Запрос на удаление фильма с сервера (из сохранённых)---- */
-  deleteFavoriteMovie(id) {
+  deleteSavedMovie(id, token) {
     return this._request(`${this._baseUrl}/movies/${id}`, {
       method: 'DELETE',
-      headers: this._headers,
+      /* headers: this._headers, */
+      headers: {
+        "authorization": `Bearer ${token}`,
+        "content-type": "application/json"
+      }
     })
   }
 
@@ -84,17 +96,24 @@ export class MainApi {
   };
 
   /* --------Получение данных пользователя с сервера----------*/
-  getUserInfoFromServer() {
+  getUserInfoFromServer(token) {
     return this._request(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      /* headers: this._headers, */
+      headers: {
+        "authorization": `Bearer ${token}`,
+        "content-type": "application/json"
+      }
     })
   }
 
   /* --------Обновление данных пользователя на сервере----------*/
-  updateUserInfoOnServer(name, email) {
+  updateUserInfoOnServer(name, email, token) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        "authorization": `Bearer ${token}`,
+        "content-type": "application/json"
+      },
       body: JSON.stringify({
         name: name,
         email: email

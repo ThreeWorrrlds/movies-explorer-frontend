@@ -5,7 +5,6 @@ function SearchForm({
   onSearchMovies,
   onSearchByName,
   handleSearchSavedFilms
-
 }) {
   const { path } = useRouteMatch();
   const [nameFilm, setNameFilm] = React.useState('');

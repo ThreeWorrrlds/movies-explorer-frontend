@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import React, { Component, useEffect, useState } from 'react';
+import { Route, Switch, useHistory, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
 import './App.css';
 import { beatfilmApi } from '../../utils/MoviesApi'
 import { api } from '../../utils/MainApi';
@@ -36,7 +36,7 @@ function App() {
 
   const history = useHistory();
   const location = useLocation()
-
+  const { path } = useRouteMatch();
 
   /* --------------------- REGISTER FORM  -------------------------*/
   function handleRegisterBtnSubmit(name, email, password) {
@@ -86,13 +86,15 @@ function App() {
 
   /* ----------ПОЛУЧЕНИЕ ДАННЫХ ТЕКУЩЕГО ЮЗЕРА---------*/
   useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfoFromServer()
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      api.getUserInfoFromServer(token)
         .then((dataUser) => {
           setCurrentUser(dataUser);
           setLoggedIn(true);
         })
         .catch((err) => {
+          alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
           console.log('Данные не получены', err)
         })
     }
@@ -100,13 +102,23 @@ function App() {
 
   /* ----------РЕДАКТИРОВАНИЕ ДАННЫХ ТЕКУЩЕГО ЮЗЕРА---------*/
   function handleBtnEditProfile(name, email) {
-    api.updateUserInfoOnServer(name, email)
-      .then((newDataUser) => {
-        setCurrentUser(newDataUser);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      api.updateUserInfoOnServer(name, email, token)
+        .then((newDataUser) => {
+          setCurrentUser(newDataUser);
+          alert("Данные успешно изменены")
+        })
+        .catch((err) => {
+          if (err.status === 500) {
+            alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
+          } else if (err.status === 409) {
+            alert('Данный email уже зарегистрирован, попробуйте другой email')
+          } else {
+            alert('Не корректный ввод')
+          }
+        })
+    }
   }
 
   /* --------BLOCK MOVIES--------- */
@@ -126,22 +138,22 @@ function App() {
   }, [isSearching])
 
 
-  /* -----------ХРАНИТ ЗАЛОГИН ПОЛЬЗОВАТЕЛЯ------- */
+  /* ----------- пользователь залогинен ------- */
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
       setLoggedIn(true);
       history.push(location);
     }
-  }, [])
+  }, [])   /*--добавил здесь зависимость для однократных запросов юзера и сейвдфилмс--*/
 
   /* --------НАПОЛНЯЕТ СТЕЙТЫ MOVIES и FILMS-------- */
   useEffect(() => {
     const allMovies = JSON.parse(localStorage.getItem('dataFilms'));
     setMovies(allMovies);
-    const foundFilms = JSON.parse(localStorage.getItem('showFoundFilms'));
-    if (foundFilms) {
-      setFilms(foundFilms);
+    const foundMovies = JSON.parse(localStorage.getItem('showFoundFilms'));
+    if (foundMovies) {
+      setFilms(foundMovies);
     }
   }, [])
 
@@ -164,17 +176,20 @@ function App() {
 
   /*------------ Получает сохраненные фильмы -----------*/
   useEffect(() => {
-    if (loggedIn) {
-      api.getAllFavoriteMovies()
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      api.getAllSavedMovies(token)
         .then((allSavedMovies) => {
           localStorage.setItem('savedFilms', JSON.stringify(allSavedMovies));
           setSavedMovies(allSavedMovies);
+          console.log('запросил сохраненные фильмы')
         })
         .catch((err) => {
+          alert("Ошибка, данные сохраненных фильмов не получены")
           console.log(err)
         })
     }
-  }, [loggedIn])
+  }, [loggedIn, history])
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -219,40 +234,53 @@ function App() {
   }
 
   function addSavedMovies(film) {
-    api.addFavoriteMovie(film)
-      .then((checkedFilm) => {
-        console.log(checkedFilm);
-        setSavedMovies([checkedFilm, ...savedMovies]);
-        document.getElementById(film.id).checked = true;
-      })
-      .catch((err) => {
-        console.log('Ошибочка', err);
-      })
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      console.log('токен при добавлении', localStorage.getItem('jwt'))
+      api.addSavedMovie(film, token)
+        .then((checkedFilm) => {
+          console.log('Фильм', `${checkedFilm.nameRU}`, 'добавлен в сохранённые');
+          setSavedMovies([checkedFilm, ...savedMovies]);
+          document.getElementById(film.id).checked = true;
+        })
+        .catch((err) => {
+          alert("При попытке сохранения фильма возникла ошибка.")
+          console.log(err);
+        })
+    }
   }
 
   function deleteSavedMovies(data) {
-    const matchFilms = savedMovies.filter((item) => item.movieId === data.id);
-    const foundItem = (matchFilms[0]);
-    api.deleteFavoriteMovie(foundItem._id)
-      .then(() => {
-        console.log('Фильм удален из сохраненных');
-        setSavedMovies(savedMovies.filter((c) => c._id !== foundItem._id));
-        document.getElementById(data.id).checked = false;
-      })
-      .catch((err) => {
-        console.log('Ошибка удаления', err);
-      })
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      const matchFilms = savedMovies.filter((item) => item.movieId === data.id);
+      const foundItem = (matchFilms[0]);
+      api.deleteSavedMovie(foundItem._id, token)
+        .then(() => {
+          console.log('Фильм удален из сохраненных');
+          setSavedMovies(savedMovies.filter((c) => c._id !== foundItem._id));
+          document.getElementById(data.id).checked = false;
+        })
+        .catch((err) => {
+          alert("При попытке удаления фильма возникла ошибка.")
+          console.log(err);
+        })
+    }
   }
 
   function handleBtnDelete(id) {
-    api.deleteFavoriteMovie(id)
-      .then((res) => {
-        console.log('Фильм удален из сохраненных', res);
-        setSavedMovies(savedMovies.filter((c) => c._id !== id));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      api.deleteSavedMovie(id, token)
+        .then((res) => {
+          console.log('Фильм удален из сохраненных', res);
+          setSavedMovies(savedMovies.filter((c) => c._id !== id));
+        })
+        .catch((err) => {
+          alert("При попытке удаления фильма возникла ошибка.")
+          console.log(err);
+        })
+    }
   }
 
   function handleSearchMovies() {
@@ -268,14 +296,16 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
           <Route exact path='/'>
-            <Header />
+            <Header
+              loggedIn={loggedIn}
+            />
             <Main />
             <Footer />
           </Route>
 
           <Route path='/movies'>
-            <Header />
 
+            <Header />
             <ProtectedRoute
               Component={Movies}
               loggedIn={loggedIn}
@@ -335,6 +365,9 @@ function App() {
             <PageNotFound />
           </Route>
 
+          {/*   <Route>
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/movies" />}
+          </Route> */}
         </Switch>
       </CurrentUserContext.Provider>
     </div>

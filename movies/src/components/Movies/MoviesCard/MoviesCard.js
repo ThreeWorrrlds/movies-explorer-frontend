@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 function MoviesCard({
   film,
@@ -36,6 +36,7 @@ function MoviesCard({
     } else {
       setIsLiked(false);
     }
+    console.log('функция отработала')
   }
 
   useEffect(() => {
@@ -48,8 +49,7 @@ function MoviesCard({
         }
       })
     }
-  }, [film, path, savedMovies, isLiked, foundDelFilm])
-
+  }, [])
 
   function handleButtonDel() {
     handleBtnDelete(film._id);
