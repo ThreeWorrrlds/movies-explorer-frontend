@@ -2,7 +2,7 @@
 export const BASE_URL = 'http://localhost:3005';
 /* export const BASE_URL = 'https://api.harrymidas.nomoredomains.work'; */
 
-export const CURRENT_TOKEN = JSON.parse(localStorage.getItem('jwt'));
+export const CURRENT_TOKEN = localStorage.getItem('jwt');
 
 export class MainApi {
   #onResponce(res) {

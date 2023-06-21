@@ -59,6 +59,10 @@
   color: #EE3465;
 }
 
+.register__input_invalid {
+  color: #EE3465;
+}
+
 .register__text-error {
   display: block;
   min-height: 12.1px;

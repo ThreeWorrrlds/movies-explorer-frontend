@@ -41,12 +41,12 @@ function App() {
   function handleRegisterBtnSubmit(name, email, password) {
     api.registerUser(name, email, password)
       .then((res) => {
-        localStorage.setItem('username', name);
         setRegisterSuccess(true);
         handleLoginBtnSubmit(email, password);
       })
       .catch((err) => {
-        console.log('Ошибка', err);
+        console.error('Ошибка', err);
+        console.log('Piu', err.status)
         setRegisterSuccess(false);
       })
   }
@@ -58,12 +58,9 @@ function App() {
     }
     api.loginUser(email, password)
       .then((jwt) => {
-        localStorage.setItem('jwt', JSON.stringify(jwt.token));
+        console.log(jwt.token)
+        localStorage.setItem('jwt', jwt.token);
         setLoggedIn(true);
-        setCurrentUser({
-          name: localStorage.getItem('username'),
-          email: email
-        })
         history.push('/movies');
       })
       .catch((err) => {
@@ -131,7 +128,7 @@ function App() {
 
   /* -----------ХРАНИТ ЗАЛОГИН ПОЛЬЗОВАТЕЛЯ------- */
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem('jwt'));
+    const token = localStorage.getItem('jwt');
     if (token) {
       setLoggedIn(true);
     }

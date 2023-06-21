@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
 
 function Register({ onRegister, registerSuccess }) {
 
   const [isBtnActive, setIsBtnActive] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
   const changeButtonState = (
     `register__button-submit ${(!isBtnActive) ? 'register__button-submit_inactive' : ''}`
   );
 
-  const [isValid, setIsValid] = useState(false);
+  const changeInputState = (
+    `register__input ${(!isEmailValid) ? 'register__input_invalid' : ''}`
+  )
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,23 +37,28 @@ function Register({ onRegister, registerSuccess }) {
     }
   }, [isValid])
 
-  useEffect(() => {
-    if (registerSuccess) {
-      setName('');
-      setEmail('');
-      setPassword('');
-      setIsBtnActive(false);
-    }
-  }, [registerSuccess])
-
   function handleInputNameChange(e) {
     setName(e.target.value)
     setErrorMessageName(e.target.validationMessage)
   }
 
-  function handleInputEmailChange(e) {
-    setEmail(e.target.value)
-    setErrorMessageEmail(e.target.validationMessage)
+  useEffect(() => {
+    if (email.length !== 0) {
+      if (validator.isEmail(email)) {
+        setIsEmailValid(true);
+        setErrorMessageEmail('');
+      } else {
+        setIsValid(false);
+        setIsEmailValid(false);
+        setErrorMessageEmail('Введите корректный email');
+      }
+    } else {
+      setErrorMessageEmail('');
+    }
+  }, [email])
+
+  async function handleInputEmailChange(e) {
+    setEmail(e.target.value);
   }
 
   function handleInputPasswordChange(e) {
@@ -60,6 +70,15 @@ function Register({ onRegister, registerSuccess }) {
     e.preventDefault();
     onRegister(name, email, password);
   }
+
+  useEffect(() => {
+    if (registerSuccess) {
+      setName('');
+      setEmail('');
+      setPassword('');
+      setIsBtnActive(false);
+    }
+  }, [registerSuccess])
 
   return (
     <div className="register">
@@ -73,12 +92,12 @@ function Register({ onRegister, registerSuccess }) {
         <h2 className="register__title">Добро пожаловать!</h2>
 
         <label htmlFor="name" className="register__label">Имя</label>
-        <input value={name} onChange={handleInputNameChange} id="name" type="name" className="register__input" name="name"
+        <input value={name} onChange={handleInputNameChange} id="name" type="name" className="register__input " name="name"
           placeholder="Имя" minLength="2" maxLength="30" required />
         <span className="register__text-error name-error">{errorMessageName}</span>
 
         <label htmlFor="email" className="register__label">E-mail</label>
-        <input value={email} onChange={handleInputEmailChange} id="email" type="email" className="register__input input-email" name="email"
+        <input value={email} onChange={handleInputEmailChange} id="email" type="email" className={changeInputState} name="email"
           placeholder="E-mail" minLength="3" maxLength="30" required />
         <span className="register__text-error email-error">{errorMessageEmail}</span>
 
@@ -97,48 +116,3 @@ function Register({ onRegister, registerSuccess }) {
 }
 
 export default Register;
-
-
-
-/*  const [isActive, setIsActive] = useState(false);
-   const [name, setName] = useState('');
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState(''); */
-
-
-/*  function validationForm() {
-   const configForm = {  //данные для параметра config
-     formSelector: '.register__form',
-     inputSelector: '.register__input',
-     submitButtonSelector: '.register__button-submit',
- 
-     inactiveButtonClass: 'register__button-submit_inactive',
-     inputErrorClass: 'popup__input_style_error',
-     errorClass: 'register__text-error'
-   }
- 
-   const registerForm = document.querySelector("#regform");
-   console.log(registerForm)
-   const formRegisterValidation = new FormValidator(configForm, registerForm);
-   formRegisterValidation.enableValidation();
- 
- } */
-
-/* const registerForm = ; */  //данные для параметра formElement
-
-/*   const [isActive, setIsActive] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); */
-
-/*   useEffect(() => {
-    setIsActive(false);
-  }, [])
- 
-  const changeButtonState = (
-    `register__button-submit ${(!isActive) ? 'register__button-submit_inactive' : ''}`
-  );  
-
-  function validationInputs() {
-    name.validationInputs()
-  } */
