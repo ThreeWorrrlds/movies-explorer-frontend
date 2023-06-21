@@ -37,21 +37,23 @@ function SearchForm({
   }
 
   function checkInputFilled() {
-    if (nameFilm.length > 3) {
-      onSearchMovies();
-    }
+    onSearchMovies();
   }
 
   useEffect(() => {
-    setNameFilm(JSON.parse(localStorage.getItem('namefilm')));
-    setShortFilm(JSON.parse(localStorage.getItem('shortfilm')));
+    const dataNameFilm = JSON.parse(localStorage.getItem('namefilm'));
+    const dataShortFilm = JSON.parse(localStorage.getItem('shortfilm'));
+    if (path === '/movies' && (dataNameFilm || dataShortFilm)) {
+      setNameFilm(dataNameFilm);
+      setShortFilm(dataShortFilm);
+    }
 
-  }, [])
+  }, [path])
 
   return (
     <section className="search-form">
       <form className="search-form__form" onSubmit={handleSubmit}>
-        <input value={nameFilm} onChange={handleInputNameChange} type="search" className="search-form__input-search" placeholder="Фильм" minLength={3} maxLength={30} required />
+        <input value={nameFilm} onChange={handleInputNameChange} type="search" className="search-form__input-search" placeholder="Фильм" maxLength={30} />
         <button type="submit" className="search-form__button-submit" onClick={checkInputFilled} ></button>
 
         <span className="search-form__separator"></span>

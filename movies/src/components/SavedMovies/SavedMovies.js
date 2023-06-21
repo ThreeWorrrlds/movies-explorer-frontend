@@ -17,7 +17,7 @@ function SavedMovies({
 
 
   function handleSearchSavedFilms(searchName) {
-    setFoundFilmsBySaved(showFilms.filter((item) => item.nameRU.includes(searchName)))
+    setFoundFilmsBySaved(showFilms.filter((item) => item.nameRU.toLowerCase().includes(searchName.toLowerCase())))
   }
 
 

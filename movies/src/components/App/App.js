@@ -135,8 +135,8 @@ function App() {
 
   /* --------ОБРАБАТЫВАЕТ ПОИСК НА СТРАНИЦЕ /MOVIES--------------*/
   function handleSearchByName(namefilm, shortfilm) {                      /*  меняем стейт на конст */
-    const showFoundFilms = movies.filter(item => {
-      if (item.nameRU.includes(namefilm) || item.description.includes(namefilm)) {
+    const foundMovies = movies.filter(item => {
+      if (item.nameRU.toLowerCase().includes(namefilm.toLowerCase()) || item.description.toLowerCase().includes(namefilm.toLowerCase())) {
         if (shortfilm) {
           const x = item.duration <= 40;
           return x;
@@ -144,10 +144,10 @@ function App() {
         return item;
       }
     })
-    setFilms(showFoundFilms);
+    setFilms(foundMovies);
     localStorage.setItem('namefilm', JSON.stringify(namefilm));
     localStorage.setItem('shortfilm', JSON.stringify(shortfilm));
-    localStorage.setItem('showFoundFilms', JSON.stringify(showFoundFilms));
+    localStorage.setItem('showFoundFilms', JSON.stringify(foundMovies));
   }
 
   useEffect(() => {
