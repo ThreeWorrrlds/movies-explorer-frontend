@@ -4,8 +4,8 @@ import { useRouteMatch } from 'react-router-dom';
 function MoviesCard({
   film,
   onCardClick,
-  addFavoriteMovies,
-  deleteFavoriteMovies,
+  addSavedMovies,
+  deleteSavedMovies,
   savedMovies,
   foundDelFilm,
   handleBtnDelete,
@@ -50,17 +50,29 @@ function MoviesCard({
     }
   }, [film, path, savedMovies, isLiked, foundDelFilm])
 
-  function handleCardClick() {
-    if (path !== '/saved-movies') {
-      onCardClick(film);
-      !isLiked ? addFavoriteMovies() : deleteFavoriteMovies(film)
-    } else if (path === '/saved-movies') {
-      return
-    }
-  }
 
   function handleButtonDel() {
     handleBtnDelete(film._id);
+    console.log('srabotal cod handleButtonDel')
+  }
+
+  function handleCardClick(e) {
+    e.preventDefault();
+    if (path !== '/saved-movies') {
+      onCardClick(film);
+      if (!isLiked) {
+        addSavedMovies(film)
+        setIsLiked(true);
+        document.getElementById(film.id).checked = true;
+      } else {
+        deleteSavedMovies(film)
+        setIsLiked(false);
+        document.getElementById(film.id).checked = false;
+      }
+
+    } else if (path === '/saved-movies') {
+      handleButtonDel();
+    }
   }
 
   function countDuration(number) {
@@ -72,17 +84,19 @@ function MoviesCard({
 
   return (
     <li className={changeVisibleCards}>
-      <label htmlFor={film.id} className="movies-card__card-catcher" onClick={handleCardClick}>
-        <img src={changeSrcImg} alt="карточка фильма" className="movies-card__movie-img" />
+      <div htmlFor={film.id} className="movies-card__card-catcher" /* onClick={handleCardClick} */  >
+        <a href={film.trailerLink} target="_blank" rel="noopener noreferrer" className="movies-card__trailer-link">
+          <img src={changeSrcImg} alt="карточка фильма" className="movies-card__movie-img" />
+        </a>
         <div className="movies-card__description-group">
           <div className="movies-card__name-group">
             <h2 className="movies-card__name">{film.nameRU}</h2>
             <input id={film.id} type="checkbox" className="movies-card__checkbox-invisible" onChange={toggleLike} />
-            <span className={changeCheckbox} onClick={handleButtonDel} ></span>
+            <span className={changeCheckbox} onClick={handleCardClick} ></span>
           </div>
           <span className="movies-card__duration">{countDuration(film.duration)}</span>
         </div>
-      </label>
+      </div>
     </li>
   )
 }

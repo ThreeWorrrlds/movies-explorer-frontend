@@ -208,7 +208,7 @@ function App() {
     addVisibleCards(quantityCards);
   }
 
-  function addFavoriteMovies() {
+  function addSavedMovies() {
     api.addFavoriteMovie(selectedMovie)
       .then((checkedFilm) => {
         console.log(checkedFilm);
@@ -220,7 +220,7 @@ function App() {
       })
   }
 
-  function deleteFavoriteMovies(data) {
+  function deleteSavedMovies(data) {
     setfoundDelFilm(savedMovies.filter((item) => item.movieId === data.id));
     const foundItem = (foundDelFilm[0]);
     api.deleteFavoriteMovie(foundItem._id)
@@ -276,8 +276,8 @@ function App() {
               showFilms={films}
               handleBtnShowMore={handleBtnShowMore}
               onCardClick={(data) => handleSelectMovie(data)}
-              addFavoriteMovies={addFavoriteMovies}
-              deleteFavoriteMovies={deleteFavoriteMovies}
+              addSavedMovies={addSavedMovies}
+              deleteSavedMovies={deleteSavedMovies}
               savedMovies={savedMovies}
               foundDelFilm={foundDelFilm}
               quantityCards={quantityCards}

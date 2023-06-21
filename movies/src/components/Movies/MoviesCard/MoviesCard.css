@@ -28,8 +28,14 @@
   cursor: pointer;
 }
 
-.movies-card__movie-img {
+.movies-card__trailer-link {
+  display: inline-block;
+  text-decoration: none;
   height: 151px;
+}
+
+.movies-card__movie-img {
+  height: 100%;
   width: 100%;
   object-fit: cover;
 }
@@ -77,6 +83,7 @@
   border-radius: 50%;
   margin: 0;
   padding: 0;
+  z-index: 10;
 }
 
 .movies-card__checkbox-invisible:checked+.movies-card__checkbox-visible {

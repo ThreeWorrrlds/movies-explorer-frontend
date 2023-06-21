@@ -5,8 +5,8 @@ import { useRouteMatch } from 'react-router-dom';
 function MoviesCardList({
   showFilms,
   onCardClick,
-  addFavoriteMovies,
-  deleteFavoriteMovies,
+  addSavedMovies,
+  deleteSavedMovies,
   savedMovies,
   foundDelFilm,
   handleBtnDelete,
@@ -29,8 +29,8 @@ function MoviesCardList({
             key={(path !== '/saved-movies') ? film.id : film.movieId}
             film={film}
             onCardClick={onCardClick}
-            addFavoriteMovies={addFavoriteMovies}
-            deleteFavoriteMovies={deleteFavoriteMovies}
+            addSavedMovies={addSavedMovies}
+            deleteSavedMovies={deleteSavedMovies}
             savedMovies={savedMovies}
             foundDelFilm={foundDelFilm}
             handleBtnDelete={handleBtnDelete}

@@ -11,8 +11,8 @@ function Movies({
   showFilms,
   handleBtnShowMore,
   onCardClick,
-  addFavoriteMovies,
-  deleteFavoriteMovies,
+  addSavedMovies,
+  deleteSavedMovies,
   savedMovies,
   foundDelFilm,
   quantityCards
@@ -31,8 +31,8 @@ function Movies({
         < MoviesCardList
           showFilms={showFilms}
           onCardClick={onCardClick}
-          addFavoriteMovies={addFavoriteMovies}
-          deleteFavoriteMovies={deleteFavoriteMovies}
+          addSavedMovies={addSavedMovies}
+          deleteSavedMovies={deleteSavedMovies}
           savedMovies={savedMovies}
           foundDelFilm={foundDelFilm}
           quantityCards={quantityCards}
