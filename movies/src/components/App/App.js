@@ -80,7 +80,7 @@ function App() {
     localStorage.removeItem('namefilm');
     localStorage.removeItem('shortfilm');
     localStorage.removeItem('showFoundFilms');
-    /* localStorage.removeItem('savedFilms'); */
+    localStorage.removeItem('savedFilms');
     history.push('/');
   }
 
@@ -166,14 +166,23 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       api.getAllFavoriteMovies()
-        .then((allFavoritMovies) => {
-          setSavedMovies(allFavoritMovies);
+        .then((allSavedMovies) => {
+          localStorage.setItem('savedFilms', JSON.stringify(allSavedMovies));
+          setSavedMovies(allSavedMovies);
         })
         .catch((err) => {
           console.log(err)
         })
     }
   }, [loggedIn])
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      localStorage.setItem('savedFilms', JSON.stringify(savedMovies));
+      console.log('spisok savedMovies', savedMovies)
+    }
+  }, [savedMovies])
 
   function controlWindowWidth(e) {
     setWindowWidth(e.target.window.innerWidth)

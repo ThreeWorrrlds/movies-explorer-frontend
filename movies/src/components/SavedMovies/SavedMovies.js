@@ -10,17 +10,19 @@ function SavedMovies({
 }) {
 
   const [foundFilmsBySaved, setFoundFilmsBySaved] = useState([]);
-
-  useEffect(() => {
-    localStorage.setItem('savedFilms', JSON.stringify(showFilms));
-  }, [showFilms])
-
+  const [finalResult, setFinalResult] = useState([]);
 
   function handleSearchSavedFilms(searchName) {
     setFoundFilmsBySaved(showFilms.filter((item) => item.nameRU.toLowerCase().includes(searchName.toLowerCase())))
   }
 
-
+  useEffect(() => {
+    if (foundFilmsBySaved.length === 0) {
+      setFinalResult(showFilms)
+    } else {
+      setFinalResult(foundFilmsBySaved)
+    }
+  }, [foundFilmsBySaved, showFilms])
 
   return (
     <div className="saved-movies">
@@ -30,7 +32,7 @@ function SavedMovies({
       />
 
       <MoviesCardList
-        showFilms={isSearching ? foundFilmsBySaved : showFilms}
+        showFilms={finalResult}
         handleBtnDelete={handleBtnDelete}
       />
     </div>
