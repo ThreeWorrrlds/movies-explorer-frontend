@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import './App.css';
 import { beatfilmApi } from '../../utils/MoviesApi'
 import { api } from '../../utils/MainApi';
@@ -35,6 +35,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const history = useHistory();
+  const location = useLocation()
 
 
   /* --------------------- REGISTER FORM  -------------------------*/
@@ -90,7 +91,6 @@ function App() {
         .then((dataUser) => {
           setCurrentUser(dataUser);
           setLoggedIn(true);
-          history.push('/movies');
         })
         .catch((err) => {
           console.log('Данные не получены', err)
@@ -131,6 +131,7 @@ function App() {
     const token = localStorage.getItem('jwt');
     if (token) {
       setLoggedIn(true);
+      history.push(location);
     }
   }, [])
 
@@ -325,9 +326,6 @@ function App() {
             <PageNotFound />
           </Route>
 
-          <Route>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
-          </Route>
         </Switch>
       </CurrentUserContext.Provider>
     </div>
