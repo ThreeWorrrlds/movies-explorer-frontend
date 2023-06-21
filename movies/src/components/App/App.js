@@ -208,12 +208,12 @@ function App() {
     addVisibleCards(quantityCards);
   }
 
-  function addSavedMovies() {
-    api.addFavoriteMovie(selectedMovie)
+  function addSavedMovies(film) {
+    api.addFavoriteMovie(film)
       .then((checkedFilm) => {
         console.log(checkedFilm);
         setSavedMovies([checkedFilm, ...savedMovies]);
-        document.getElementById(selectedMovie.id).checked = true;
+        document.getElementById(film.id).checked = true;
       })
       .catch((err) => {
         console.log('Ошибочка', err);
@@ -221,8 +221,8 @@ function App() {
   }
 
   function deleteSavedMovies(data) {
-    setfoundDelFilm(savedMovies.filter((item) => item.movieId === data.id));
-    const foundItem = (foundDelFilm[0]);
+    const matchFilms = savedMovies.filter((item) => item.movieId === data.id);
+    const foundItem = (matchFilms[0]);
     api.deleteFavoriteMovie(foundItem._id)
       .then(() => {
         console.log('Фильм удален из сохраненных');
