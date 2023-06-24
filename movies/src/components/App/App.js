@@ -47,7 +47,7 @@ function App() {
       })
       .catch((err) => {
         console.error('Ошибка', err);
-        console.log('Piu', err.status)
+        console.log(err.status)
         setRegisterSuccess(false);
       })
   }
