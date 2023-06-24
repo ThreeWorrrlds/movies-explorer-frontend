@@ -36,7 +36,6 @@ function MoviesCard({
     } else {
       setIsLiked(false);
     }
-    console.log('функция отработала')
   }
 
   useEffect(() => {
