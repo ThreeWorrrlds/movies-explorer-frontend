@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 
 function MoviesCard({
   film,
-  onCardClick,
   addSavedMovies,
   deleteSavedMovies,
   savedMovies,
-  foundDelFilm,
   handleBtnDelete,
-  showFilms,
   quantityCards,
   indexSelf
 }) {
@@ -52,13 +49,11 @@ function MoviesCard({
 
   function handleButtonDel() {
     handleBtnDelete(film._id);
-    console.log('srabotal cod handleButtonDel')
   }
 
   function handleCardClick(e) {
     e.preventDefault();
     if (path !== '/saved-movies') {
-      onCardClick(film);
       if (!isLiked) {
         addSavedMovies(film)
         setIsLiked(true);
@@ -83,7 +78,7 @@ function MoviesCard({
 
   return (
     <li className={changeVisibleCards}>
-      <div htmlFor={film.id} className="movies-card__card-catcher" /* onClick={handleCardClick} */  >
+      <div htmlFor={film.id} className="movies-card__card-catcher" >
         <a href={film.trailerLink} target="_blank" rel="noopener noreferrer" className="movies-card__trailer-link">
           <img src={changeSrcImg} alt="карточка фильма" className="movies-card__movie-img" />
         </a>

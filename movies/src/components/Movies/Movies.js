@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
 import Preloader from "./Preloader/Preloader";
 
 function Movies({
-  movies,
   onSearchMovies,
   onSearchByName,
   isLoading,
   showFilms,
   handleBtnShowMore,
-  onCardClick,
   addSavedMovies,
   deleteSavedMovies,
   savedMovies,
-  foundDelFilm,
   quantityCards
 }) {
 
@@ -30,11 +27,9 @@ function Movies({
         <Preloader /> :
         < MoviesCardList
           showFilms={showFilms}
-          onCardClick={onCardClick}
           addSavedMovies={addSavedMovies}
           deleteSavedMovies={deleteSavedMovies}
           savedMovies={savedMovies}
-          foundDelFilm={foundDelFilm}
           quantityCards={quantityCards}
         />
       }

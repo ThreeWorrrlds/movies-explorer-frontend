@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from '../../images/logo.svg';
 import { Link, useRouteMatch } from 'react-router-dom';
 
@@ -14,10 +14,6 @@ function Header({
   const changeVsibleSideButton = (
     `side-panel ${(path === '/' && !loggedIn) ? 'side-panel_invisible' : ''}`
   );
-
-  /*  const pathLogin = (
-     `${(loggedIn) ? '/movies' : '/signin'}`
-   ); */
 
   function closeSidePanel() {
     document.getElementById('sidepanel').checked = false;

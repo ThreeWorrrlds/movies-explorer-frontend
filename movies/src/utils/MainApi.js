@@ -23,7 +23,6 @@ export class MainApi {
 
   /* Добавляет фильм в избранное */
   addSavedMovie(data, token) {
-    console.log(this._headers)
     return this._request(`${this._baseUrl}/movies`, {
       method: 'POST',
       /* headers: this._headers, */

@@ -12,7 +12,6 @@ function Footer() {
           <li className="footer__link"><a href='https://github.com/' target="blank" className="footer__link-text" >Github</a></li>
         </ul>
       </div>
-
     </footer>
   );
 }

@@ -5,9 +5,7 @@ import validator from 'validator';
 
 function Login({ onLogin, loggedIn }) {
 
-
   const [isBtnActive, setIsBtnActive] = useState(false);
-
   const [isValid, setIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
 
@@ -18,10 +16,8 @@ function Login({ onLogin, loggedIn }) {
     `login__input ${(!isEmailValid) ? 'login__input_invalid' : ''}`
   )
 
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
   const history = useHistory();
@@ -43,15 +39,6 @@ function Login({ onLogin, loggedIn }) {
       setIsBtnActive(false);
     }
   }, [isValid])
-
-  /*   useEffect(() => {
-      if (registerSuccess) {
-        setName('');
-        setEmail('');
-        setPassword('');
-        setIsBtnActive(false);
-      }
-    }, [registerSuccess]) */
 
   useEffect(() => {
     if (email.length !== 0) {

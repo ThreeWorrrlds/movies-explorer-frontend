@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Route, Switch, useHistory, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import './App.css';
 import { beatfilmApi } from '../../utils/MoviesApi'
 import { api } from '../../utils/MainApi';
@@ -13,7 +13,6 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import PageNotFound from '../PageNotFound/PageNotFound'
-import Preloader from '../Movies/Preloader/Preloader';
 import ProtectedRoute from '../ProtectedRoutes/ProtectedRoute';
 import { WINDOW_SIZE, NUMBER_CARDS_FOR_DEVICE, ADDITIONAL_CARDS_FOR_SHOW, SHORT_FILM_MAX_VALUE_MINUTES } from '../../utils/constants';
 
@@ -22,23 +21,16 @@ function App() {
 
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-
   const [isSearching, setIsSearching] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(null);
-
   const [movies, setMovies] = useState([]);
   const [films, setFilms] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
   const [quantityCards, setQuantityCards] = useState(null);
-  const [selectedMovie, setSelectedMovie] = useState({});
-  const [foundDelFilm, setfoundDelFilm] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
   const history = useHistory();
   const location = useLocation()
-  const { path } = useRouteMatch();
 
   /* --------------------- REGISTER FORM  -------------------------*/
   function handleRegisterBtnSubmit(name, email, password) {
@@ -61,7 +53,6 @@ function App() {
     }
     api.loginUser(email, password)
       .then((jwt) => {
-        console.log(jwt.token)
         localStorage.setItem('jwt', jwt.token);
         setLoggedIn(true);
         history.push('/movies');
@@ -77,12 +68,14 @@ function App() {
     setLoggedIn(false);
     setFilms([]);
     setSavedMovies([]);
+    setMovies([]);
     localStorage.removeItem('jwt');
     localStorage.removeItem('username');
     localStorage.removeItem('namefilm');
     localStorage.removeItem('shortfilm');
     localStorage.removeItem('showFoundFilms');
     localStorage.removeItem('savedFilms');
+    localStorage.removeItem('dataFilms');
     history.push('/');
   }
 
@@ -125,20 +118,21 @@ function App() {
 
   /* --------BLOCK MOVIES--------- */
   useEffect(() => {
-    setIsLoading(true);
-    beatfilmApi.getAllMovies()
-      .then((dataFilms) => {
-        localStorage.setItem('dataFilms', JSON.stringify(dataFilms));
-      })
-      .catch((err) => {
-        alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
-        console.log(err)
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
-  }, [isSearching])
-
+    if (loggedIn) {
+      setIsLoading(true);
+      beatfilmApi.getAllMovies()
+        .then((dataFilms) => {
+          localStorage.setItem('dataFilms', JSON.stringify(dataFilms));
+        })
+        .catch((err) => {
+          alert("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
+          console.log(err)
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+    }
+  }, [isSearching, loggedIn])
 
   /* ----------- пользователь залогинен ------- */
   useEffect(() => {
@@ -157,10 +151,11 @@ function App() {
     if (foundMovies) {
       setFilms(foundMovies);
     }
-  }, [])
+  }, [isSearching, loggedIn, isLoading])
 
   /* --------ОБРАБАТЫВАЕТ ПОИСК НА СТРАНИЦЕ /MOVIES--------------*/
-  function handleSearchByName(namefilm, shortfilm) {                      /*  меняем стейт на конст */
+  function handleSearchByName(namefilm, shortfilm) {
+    console.log('vpoiske', movies)
     const foundMovies = movies.filter(item => {
       if (item.nameRU.toLowerCase().includes(namefilm.toLowerCase()) || item.description.toLowerCase().includes(namefilm.toLowerCase())) {
         if (shortfilm) {
@@ -184,7 +179,6 @@ function App() {
         .then((allSavedMovies) => {
           localStorage.setItem('savedFilms', JSON.stringify(allSavedMovies));
           setSavedMovies(allSavedMovies);
-          console.log('запросил сохраненные фильмы')
         })
         .catch((err) => {
           alert("Ошибка, данные сохраненных фильмов не получены")
@@ -197,15 +191,8 @@ function App() {
     const token = localStorage.getItem('jwt');
     if (token) {
       localStorage.setItem('savedFilms', JSON.stringify(savedMovies));
-      console.log('spisok savedMovies', savedMovies)
     }
   }, [savedMovies])
-
-  function controlWindowWidth(e) {
-    setWindowWidth(e.target.window.innerWidth)
-  }
-
-  window.addEventListener('resize', controlWindowWidth);
 
   useEffect(() => {
     if (window.innerWidth > WINDOW_SIZE.desktop) {
@@ -238,7 +225,6 @@ function App() {
   function addSavedMovies(film) {
     const token = localStorage.getItem('jwt');
     if (token) {
-      console.log('токен при добавлении', localStorage.getItem('jwt'))
       api.addSavedMovie(film, token)
         .then((checkedFilm) => {
           console.log('Фильм', `${checkedFilm.nameRU}`, 'добавлен в сохранённые');
@@ -275,7 +261,6 @@ function App() {
     if (token) {
       api.deleteSavedMovie(id, token)
         .then((res) => {
-          console.log('Фильм удален из сохраненных', res);
           setSavedMovies(savedMovies.filter((c) => c._id !== id));
         })
         .catch((err) => {
@@ -287,10 +272,6 @@ function App() {
 
   function handleSearchMovies() {
     setIsSearching(true);
-  }
-
-  function handleSelectMovie(dataFavoriteMovie) {
-    setSelectedMovie(dataFavoriteMovie);
   }
 
   return (
@@ -306,7 +287,6 @@ function App() {
           </Route>
 
           <Route path='/movies'>
-
             <Header />
             <ProtectedRoute
               Component={Movies}
@@ -317,11 +297,9 @@ function App() {
               isLoading={isLoading}
               showFilms={films}
               handleBtnShowMore={handleBtnShowMore}
-              onCardClick={(data) => handleSelectMovie(data)}
               addSavedMovies={addSavedMovies}
               deleteSavedMovies={deleteSavedMovies}
               savedMovies={savedMovies}
-              foundDelFilm={foundDelFilm}
               quantityCards={quantityCards}
             />
             <Footer />
@@ -368,10 +346,6 @@ function App() {
           <Route path='/*'>
             <PageNotFound />
           </Route>
-
-          {/* <Route>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
-          </Route> */}
         </Switch>
       </CurrentUserContext.Provider>
     </div>

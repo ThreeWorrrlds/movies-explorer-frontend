@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import validator from 'validator';
 
 function Profile({
   onEditProfile,
   handleLogout
 }) {
-
-  const history = useHistory();
 
   const currentUser = React.useContext(CurrentUserContext);
 
