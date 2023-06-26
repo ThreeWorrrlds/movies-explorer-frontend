@@ -155,7 +155,6 @@ function App() {
 
   /* --------ОБРАБАТЫВАЕТ ПОИСК НА СТРАНИЦЕ /MOVIES--------------*/
   function handleSearchByName(namefilm, shortfilm) {
-    console.log('vpoiske', movies)
     const foundMovies = movies.filter(item => {
       if (item.nameRU.toLowerCase().includes(namefilm.toLowerCase()) || item.description.toLowerCase().includes(namefilm.toLowerCase())) {
         if (shortfilm) {

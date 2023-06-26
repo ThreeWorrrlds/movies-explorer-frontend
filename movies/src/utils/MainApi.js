@@ -1,6 +1,6 @@
 /* export const BASE_URL = 'http://localhost:3000'; */
-export const BASE_URL = 'http://localhost:3005';
-/* export const BASE_URL = 'https://api.harrymidas.nomoredomains.work'; */
+/* export const BASE_URL = 'http://localhost:3005'; */
+export const BASE_URL = 'https://api.harrymidas.nomoredomains.work';
 
 export const CURRENT_TOKEN = localStorage.getItem('jwt');
 
@@ -129,6 +129,3 @@ const api = new MainApi(BASE_URL,
     }
   });
 export { api };
-
-/* "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY1ZWVkNzA0YTE1MTQ2ZWFlMWZlNmQiLCJpYXQiOjE2ODQ0MDE4NzksImV4cCI6MTY4NTAwNjY3OX0.-MHMDYlHKKuj0BdUbz_xEgmPG6nmnnMwUkV0u-ymI68", */
-/* '9800edab-c01e-4941-9a81-bb143e90c5b8' */
