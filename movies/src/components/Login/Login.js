@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
 
 function Login({ onLogin }) {
 
 
   const [isBtnActive, setIsBtnActive] = useState(false);
 
+  const [isValid, setIsValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+
   const changeButtonState = (
     `login__button-submit ${(!isBtnActive) ? 'login__button-submit_inactive' : ''}`
   );
+  const changeInputState = (
+    `login__input ${(!isEmailValid) ? 'login__input_invalid' : ''}`
+  )
 
-  const [isValid, setIsValid] = useState(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,9 +46,24 @@ function Login({ onLogin }) {
       }
     }, [registerSuccess]) */
 
+  useEffect(() => {
+    if (email.length !== 0) {
+      if (validator.isEmail(email)) {
+        setIsEmailValid(true);
+        setErrorMessageEmail('');
+      } else {
+        setIsValid(false);
+        setIsEmailValid(false);
+        setIsBtnActive(false);
+        setErrorMessageEmail('Введите корректный email');
+      }
+    } else {
+      setErrorMessageEmail('');
+    }
+  }, [email, isBtnActive])
+
   function handleInputEmailChange(e) {
     setEmail(e.target.value)
-    setErrorMessageEmail(e.target.validationMessage)
   }
 
   function handleInputPasswordChange(e) {
@@ -66,7 +87,7 @@ function Login({ onLogin }) {
         <h2 className="login__title">Рады видеть!</h2>
 
         <label htmlFor="email" className="login__label">E-mail</label>
-        <input value={email} onChange={handleInputEmailChange} id="email" type="email" className="login__input login__input_type_email" name="email"
+        <input value={email} onChange={handleInputEmailChange} id="email" type="email" className={changeInputState} name="email"
           placeholder="E-mail" minLength="3" maxLength="30" required />
         <span className="login__text-error login-email-error">{errorMessageEmail}</span>
 

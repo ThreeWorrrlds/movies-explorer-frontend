@@ -50,12 +50,13 @@ function Register({ onRegister, registerSuccess }) {
       } else {
         setIsValid(false);
         setIsEmailValid(false);
+        setIsBtnActive(false);
         setErrorMessageEmail('Введите корректный email');
       }
     } else {
       setErrorMessageEmail('');
     }
-  }, [email])
+  }, [email, isBtnActive])
 
   async function handleInputEmailChange(e) {
     setEmail(e.target.value);

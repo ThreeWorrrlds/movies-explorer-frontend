@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
+import validator from 'validator';
 
 function Profile({
   onEditProfile,
@@ -12,12 +13,14 @@ function Profile({
   const currentUser = React.useContext(CurrentUserContext);
 
   const [isBtnActive, setIsBtnActive] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
   const changeButtonState = (
     `profile__button-submit profile__button_type_edit ${(!isBtnActive) ? 'profile__button-submit_inactive' : ''}`
   );
 
-  const [isValid, setIsValid] = useState(false);
+
   const [isInputChanged, setIsInputChanged] = useState(false);
 
   const [name, setName] = useState('');
@@ -42,6 +45,23 @@ function Profile({
     setName(currentUser.name);
     setEmail(currentUser.email);
   }, [currentUser.name, currentUser.email])
+
+  useEffect(() => {
+    if (email) {
+      if (validator.isEmail(email)) {
+        setIsEmailValid(true);
+        setErrorMessageEmail('');
+      } else {
+        setIsValid(false);
+        setIsEmailValid(false);
+        setIsBtnActive(false);
+        setErrorMessageEmail('Введите корректный email');
+      }
+    } else {
+      setErrorMessageEmail('');
+    }
+  }, [email, isBtnActive])
+
 
   function handleInputNameChange(e) {
     setName(e.target.value);

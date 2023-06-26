@@ -60,6 +60,10 @@
   color: #EE3465;
 }
 
+.login__input_invalid {
+  color: #EE3465;
+}
+
 .login__text-error {
   display: block;
   min-height: 12.1px;
