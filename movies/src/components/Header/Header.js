@@ -12,12 +12,12 @@ function Header({
   );
 
   const changeVsibleSideButton = (
-    `side-panel ${(path === '/') ? 'side-panel_invisible' : ''}`
+    `side-panel ${(path === '/' && !loggedIn) ? 'side-panel_invisible' : ''}`
   );
 
-  const pathLogin = (
-    `${(loggedIn) ? '/movies' : '/signin'}`
-  );
+  /*  const pathLogin = (
+     `${(loggedIn) ? '/movies' : '/signin'}`
+   ); */
 
   function closeSidePanel() {
     document.getElementById('sidepanel').checked = false;
@@ -31,9 +31,9 @@ function Header({
         </a>
 
         <nav className="header__film-menu">
-          {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
+          {(loggedIn || path === '/movies' || path === '/saved-movies' || path === '/profile') &&
             <Link className="header__link header__link_film" to='/movies'>Фильмы</Link>}
-          {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
+          {(loggedIn || path === '/movies' || path === '/saved-movies' || path === '/profile') &&
             <Link className="header__link header__link_film" to='/saved-movies'>Сохранённые фильмы</Link>}
         </nav>
 
@@ -56,11 +56,11 @@ function Header({
         </label>
 
         <nav className="header__profile-menu">
-          {(path === '/') &&
+          {(path === '/' && !loggedIn) &&
             <Link className="header__link header__link_type_register" to='/signup'>Регистрация</Link>}
-          {(path === '/') &&
-            <Link className="header__link header__link_type_login" to={pathLogin}>Войти</Link>}
-          {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
+          {(path === '/' && !loggedIn) &&
+            <Link className="header__link header__link_type_login" to='/signin'>Войти</Link>}
+          {(loggedIn || path === '/movies' || path === '/saved-movies' || path === '/profile') &&
             <Link className="header__link header__link_type_profile" to='/profile'>Аккаунт</Link>}
         </nav>
       </div>
