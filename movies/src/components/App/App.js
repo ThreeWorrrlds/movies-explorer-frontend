@@ -352,12 +352,14 @@ function App() {
             <Register
               onRegister={handleRegisterBtnSubmit}
               registerSuccess={registerSuccess}
+              loggedIn={loggedIn}
             />
           </Route>
 
           <Route path='/signin'>
             <Login
               onLogin={handleLoginBtnSubmit}
+              loggedIn={loggedIn}
             />
           </Route>
 
@@ -365,8 +367,8 @@ function App() {
             <PageNotFound />
           </Route>
 
-          {/*   <Route>
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/movies" />}
+          {/* <Route>
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           </Route> */}
         </Switch>
       </CurrentUserContext.Provider>

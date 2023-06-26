@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import logo from '../../images/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import validator from 'validator';
 
-function Register({ onRegister, registerSuccess }) {
+function Register({ onRegister, registerSuccess, loggedIn }) {
 
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isValid, setIsValid] = useState(false);
@@ -24,10 +24,17 @@ function Register({ onRegister, registerSuccess }) {
   const [errorMessageName, setErrorMessageName] = useState('');
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
+  const history = useHistory();
 
   function validationForm(e) {
     setIsValid(e.target.closest("form").checkValidity());
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      history.push('/movies');
+    }
+  }, [history, loggedIn])
 
   useEffect(() => {
     if (isValid) {
