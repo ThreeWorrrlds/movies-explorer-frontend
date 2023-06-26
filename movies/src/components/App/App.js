@@ -15,6 +15,8 @@ import Footer from '../Footer/Footer';
 import PageNotFound from '../PageNotFound/PageNotFound'
 import Preloader from '../Movies/Preloader/Preloader';
 import ProtectedRoute from '../ProtectedRoutes/ProtectedRoute';
+import { WINDOW_SIZE, NUMBER_CARDS_FOR_DEVICE, ADDITIONAL_CARDS_FOR_SHOW, SHORT_FILM_MAX_VALUE_MINUTES } from '../../utils/constants';
+
 
 function App() {
 
@@ -145,7 +147,7 @@ function App() {
       setLoggedIn(true);
       history.push(location);
     }
-  }, [])   /*--добавил здесь зависимость для однократных запросов юзера и сейвдфилмс--*/
+  }, [])
 
   /* --------НАПОЛНЯЕТ СТЕЙТЫ MOVIES и FILMS-------- */
   useEffect(() => {
@@ -162,8 +164,8 @@ function App() {
     const foundMovies = movies.filter(item => {
       if (item.nameRU.toLowerCase().includes(namefilm.toLowerCase()) || item.description.toLowerCase().includes(namefilm.toLowerCase())) {
         if (shortfilm) {
-          const x = item.duration <= 40;
-          return x;
+          const duration = item.duration <= SHORT_FILM_MAX_VALUE_MINUTES;
+          return duration;
         }
         return item;
       }
@@ -206,26 +208,26 @@ function App() {
   window.addEventListener('resize', controlWindowWidth);
 
   useEffect(() => {
-    if (window.innerWidth > 1279) {
-      setQuantityCards(16);
-    } else if (window.innerWidth > 1196) {
-      setQuantityCards(12);
-    } else if (window.innerWidth > 629) {
-      setQuantityCards(8);
-    } else if (window.innerWidth <= 629) {
-      setQuantityCards(5);
+    if (window.innerWidth > WINDOW_SIZE.desktop) {
+      setQuantityCards(NUMBER_CARDS_FOR_DEVICE.desktop);
+    } else if (window.innerWidth > WINDOW_SIZE.tablet) {
+      setQuantityCards(NUMBER_CARDS_FOR_DEVICE.tablet);
+    } else if (window.innerWidth > WINDOW_SIZE.smartphone) {
+      setQuantityCards(NUMBER_CARDS_FOR_DEVICE.smartphone);
+    } else if (window.innerWidth <= WINDOW_SIZE.smartphone) {
+      setQuantityCards(NUMBER_CARDS_FOR_DEVICE.smallPhone);
     }
   }, []);
 
-  function addVisibleCards(n) {
-    if (window.innerWidth > 1279) {
-      setQuantityCards(n + 4);
-    } else if (window.innerWidth > 1196) {
-      setQuantityCards(n + 3);
-    } else if (window.innerWidth > 629) {
-      setQuantityCards(n + 2);
-    } else if (window.innerWidth <= 629) {
-      setQuantityCards(n + 2);
+  function addVisibleCards(number) {
+    if (window.innerWidth > WINDOW_SIZE.desktop) {
+      setQuantityCards(number + ADDITIONAL_CARDS_FOR_SHOW.desktop);
+    } else if (window.innerWidth > WINDOW_SIZE.tablet) {
+      setQuantityCards(number + ADDITIONAL_CARDS_FOR_SHOW.tablet);
+    } else if (window.innerWidth > WINDOW_SIZE.smartphone) {
+      setQuantityCards(number + ADDITIONAL_CARDS_FOR_SHOW.smartphone);
+    } else if (window.innerWidth <= WINDOW_SIZE.smartphone) {
+      setQuantityCards(number + ADDITIONAL_CARDS_FOR_SHOW.smallPhone);
     }
   }
 
