@@ -19,7 +19,9 @@ function Profile({
   const changeButtonState = (
     `profile__button-submit profile__button_type_edit ${(!isBtnActive) ? 'profile__button-submit_inactive' : ''}`
   );
-
+  const changeInputState = (
+    `profile__input input-email ${(!isEmailValid) ? 'profile__input_invalid' : ''}`
+  )
 
   const [isInputChanged, setIsInputChanged] = useState(false);
 
@@ -105,7 +107,7 @@ function Profile({
         <span className="profile__text-error profile-name-error">{errorMessageName}</span>
 
         <label htmlFor="email" className="profile__label">E-mail</label>
-        <input defaultValue={email} onChange={handleInputEmailChange} id="email" type="email" className="profile__input input-email" name="email"
+        <input defaultValue={email} onChange={handleInputEmailChange} id="email" type="email" className={changeInputState} name="email"
           placeholder="E-mail" minLength="3" maxLength="30" required />
         <span className="profile__text-error profile-email-error">{errorMessageEmail}</span>
 
