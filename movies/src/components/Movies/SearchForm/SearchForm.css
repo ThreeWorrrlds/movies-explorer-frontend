@@ -41,6 +41,7 @@
   background-repeat: no-repeat;
   background-position: 0px 2px;
   background-size: 22px 22px;
+  color: #8B8B8B;
   text-indent: 38px;
   font-size: 18px;
   line-height: 1.11;
@@ -117,28 +118,35 @@
 }
 
 .search-form__checkbox-visible {
+  display: grid;
+  grid: "toggle";
   vertical-align: middle;
   width: 36px;
   height: 20px;
   background-color: #202020;
   border-radius: 16px;
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
 }
 
 .search-form__checkbox-toggle {
   display: block;
+  grid-area: toggle;
   height: 16px;
   width: 16px;
-  background-color: #3DDC84;
+  background-color: #8B8B8B;
   border-radius: 50%;
   margin: 0 5.55%;
 }
 
-.search-form__checkbox-invisible:checked+.search-form__checkbox-visible {
-  justify-content: start;
+.search-form__checkbox-toggle_active {
+  background-color: #3DDC84;
+  justify-self: end;
 }
+
+/* .search-form__checkbox-invisible:checked+.search-form__checkbox-visible {
+  justify-content: end;
+} */
+
 
 @media screen and (max-width: 890px) {
   .search-form {

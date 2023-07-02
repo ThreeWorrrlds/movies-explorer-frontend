@@ -4,3 +4,7 @@
   min-height: 100vh;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
+
+.hidden {
+  display: none;
+}

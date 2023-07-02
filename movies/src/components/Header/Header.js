@@ -2,7 +2,9 @@ import React from "react";
 import logo from '../../images/logo.svg';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-function Header() {
+function Header({
+  loggedIn
+}) {
   const { path } = useRouteMatch();
 
   const changeBackgroundHeader = (
@@ -10,8 +12,12 @@ function Header() {
   );
 
   const changeVsibleSideButton = (
-    `side-panel ${(path === '/') ? 'side-panel_invisible' : ''}`
+    `side-panel ${(path === '/' && !loggedIn) ? 'side-panel_invisible' : ''}`
   );
+
+  function closeSidePanel() {
+    document.getElementById('sidepanel').checked = false;
+  }
 
   return (
     <header className={changeBackgroundHeader}>
@@ -21,24 +27,24 @@ function Header() {
         </a>
 
         <nav className="header__film-menu">
-          {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
+          {(loggedIn || path === '/movies' || path === '/saved-movies' || path === '/profile') &&
             <Link className="header__link header__link_film" to='/movies'>Фильмы</Link>}
-          {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
+          {(loggedIn || path === '/movies' || path === '/saved-movies' || path === '/profile') &&
             <Link className="header__link header__link_film" to='/saved-movies'>Сохранённые фильмы</Link>}
         </nav>
 
         <label htmlFor="sidepanel" className={changeVsibleSideButton}>
           <input id="sidepanel" type="checkbox" className="side-panel__checkbox-invisible" />
           <div className="side-panel__window">
-            <button type="button" className="side-panel__close-button"></button>
+            <button type="button" className="side-panel__close-button" onClick={closeSidePanel}></button>
             <nav className="side-panel__link-block">
-              <Link className="side-panel__link" to='/'>Главная</Link>
-              <Link className="side-panel__link" to='/movies'>Фильмы</Link>
-              <Link className="side-panel__link" to='/saved-movies'>Сохранённые фильмы</Link>
+              <Link className="side-panel__link" to='/' onClick={closeSidePanel}>Главная</Link>
+              <Link className="side-panel__link" to='/movies' onClick={closeSidePanel}>Фильмы</Link>
+              <Link className="side-panel__link" to='/saved-movies' onClick={closeSidePanel}>Сохранённые фильмы</Link>
             </nav>
-            <Link className="side-link__type_profile" to='/profile'>Аккаунт</Link>
+            <Link className="side-link__type_profile" to='/profile' onClick={closeSidePanel}>Аккаунт</Link>
           </div>
-          <nav className="side-panel__checkbox-visible">
+          <nav className="side-panel__checkbox-visible" >
             <span className="side-panel__checkbox-line"></span>
             <span className="side-panel__checkbox-line"></span>
             <span className="side-panel__checkbox-line"></span>
@@ -46,11 +52,11 @@ function Header() {
         </label>
 
         <nav className="header__profile-menu">
-          {(path === '/') &&
+          {(path === '/' && !loggedIn) &&
             <Link className="header__link header__link_type_register" to='/signup'>Регистрация</Link>}
-          {(path === '/') &&
+          {(path === '/' && !loggedIn) &&
             <Link className="header__link header__link_type_login" to='/signin'>Войти</Link>}
-          {(path === '/movies' || path === '/saved-movies' || path === '/profile') &&
+          {(loggedIn || path === '/movies' || path === '/saved-movies' || path === '/profile') &&
             <Link className="header__link header__link_type_profile" to='/profile'>Аккаунт</Link>}
         </nav>
       </div>
