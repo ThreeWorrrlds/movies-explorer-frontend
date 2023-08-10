@@ -1,7 +1,14 @@
-# movies-explorer-frontend
+# **Проект: movies-explorer-frontend**
+_________________________________________________________________________________________________________
 
- ссылка на макет: https://disk.yandex.ru/d/y9YDNCStlcBg-g
+### Технологии:
 
- ссылка на pull request: https://github.com/ThreeWorrrlds/movies-explorer-frontend/pull/2
+- `React 5.0.1`
+- `методология БЭМ`
+- `Адаптивная верстка`
 
- ссылка на фронтенд: https://harrymidas.nomoredomains.work
+_________________________________________________________________________________________________________
+                                                                                                          
+## Запуск проекта
+
+`npm run start` — запускает проект   
